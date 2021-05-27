@@ -5,11 +5,11 @@ import { fetchCharacterById as fetchCharacterByIdService } from '../../services/
 export const fetchCharacterById = createAsyncThunk(
   'characterDetail/fetchCharacterByIdStatus',
   async (characterId: string) => {
-    const result = await fetchCharacterByIdService(characterId);
+    if(characterId) {
+      const result = await fetchCharacterByIdService(characterId);
 
-    console.log(result);
-
-    return result;
+      return result;
+    }
   }
 );
 
@@ -26,9 +26,6 @@ export const characterDetailSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchCharacterById.fulfilled, (state, action) => {
-      console.log(action, 'da action');
-      console.log(state, 'da state');
-
       state.character = action.payload;
     })
   }
