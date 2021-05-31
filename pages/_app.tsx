@@ -6,14 +6,26 @@ import { AppProps } from 'next/app';
 
 // redux-toolkit
 import { store } from '../src/vendors/redux-toolkit';
-import { Provider } from 'react-redux'
+import { Provider } from 'react-redux';
+// recoil
+import { RecoilRoot } from 'recoil';
 
-const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
-  return (
+const providers = {
+  'redux': (content) => (
     <Provider store={store}>
-      <Component {...pageProps} />
+      {content}
     </Provider>
-  );
+  ),
+  'recoil': (content) => (
+    <RecoilRoot>
+      {content}
+    </RecoilRoot>
+  ),
+  'zustand': (content) => content
 };
+
+const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => (
+  providers['recoil'](<Component {...pageProps} />)
+);
 
 export default MyApp;
