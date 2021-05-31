@@ -12,8 +12,13 @@ export const characterDetailSelector = selector({
   key: 'characterDetailSelector',
   get: async ({ get }) => {
     const { characterId } = get(characterDetailState);
-    const characterDetail = await fetchCharacterById(characterId);
 
-    return characterDetail;
+    if(characterId) {
+      const characterDetail = await fetchCharacterById(characterId);
+
+      return characterDetail;
+    }
+
+    return {};
   }
 });
